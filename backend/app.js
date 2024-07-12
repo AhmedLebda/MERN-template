@@ -8,6 +8,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import morgan from "morgan";
 import "express-async-errors";
+import errorhandler from "./middlewares/error_handler/errorHandler";
+
 // db
 import dbConnection from "./dbConnection";
 
@@ -36,5 +38,8 @@ app.use("/api/users", user_Routes);
 app.use((req, res) => {
     res.status(404).json({ error: "unknown endpoint" });
 });
+
+// Error handler middleware
+app.use(errorhandler);
 
 export default app;

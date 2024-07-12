@@ -100,4 +100,9 @@ Features:
         -   post_login
         -   get_logout
 
+#### updates
+
+-   Error handling custom middleware (/middlewares/error_handler/errorHandler.js)
+-   Auth helper utility functions (/utils/helpers/auth_helpers.js)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
