@@ -1,5 +1,4 @@
 import { Schema, model } from "mongoose";
-import bcrypt from "bcrypt";
 
 const userSchema = new Schema(
     {
@@ -7,60 +6,56 @@ const userSchema = new Schema(
             type: String,
             required: [true, "please enter your first name"],
             minlength: [3, "your name is too short!"],
+            maxLength: [30, "first name is too long"],
             lowercase: true,
         },
         lastName: {
             type: String,
             required: [true, "please enter your last name"],
             minlength: [3, "your name is too short!"],
+            maxLength: [30, "last name is too long"],
             lowercase: true,
         },
         email: {
             type: String,
             required: [true, "please enter your email"],
-            unique: true,
+            unique: [true, "This email already exists"],
+        },
+        username: {
+            type: String,
+            minLength: [3, "username is too short"],
+            maxLength: [30, "username is too long"],
+            required: [true, "Please enter a username"],
+            unique: [true, "This username already exists"],
+            trim: true,
         },
         password: {
             type: String,
             required: [true, "please enter a password"],
-            minlength: [6, "Your password must be longer than 6 characters"],
         },
         confirmPassword: {
             type: String,
             required: [true, "please enter a password"],
-            minlength: [6, "Your password must be longer than 6 characters"],
         },
         status: { type: String, default: "basic" },
     },
-    {
-        timestamps: true,
-    }
+    { timestamps: true }
 );
 
-//! Virtual
+// Virtual to return the user full name
 userSchema.virtual("fullName").get(function () {
     return `${this.firstName} ${this.lastName}`;
 });
 
-//! Encrypt Password before saving to db
-userSchema.pre("save", async function (next) {
-    const salt = await bcrypt.genSalt();
-    this.password = await bcrypt.hash(this.password, salt);
-    this.confirmPassword = this.password;
-    next();
+// transform _id to id and remove __v, password, confirmPassword from json return
+userSchema.set("toJSON", {
+    transform: (document, returnedObject) => {
+        returnedObject.id = returnedObject._id.toString();
+        delete returnedObject._id;
+        delete returnedObject.__v;
+        delete returnedObject.password;
+        delete returnedObject.confirmPassword;
+    },
 });
-
-//! User Authentication
-userSchema.statics.logUser = async function (email, password) {
-    const user = await this.findOne({ email: email });
-    if (user) {
-        const validPassword = await bcrypt.compare(password, user.password);
-        if (validPassword) {
-            return user;
-        }
-        throw new Error("invalid email or password");
-    }
-    throw new Error("invalid email or password");
-};
 
 export default model("User", userSchema);

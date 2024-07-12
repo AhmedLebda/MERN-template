@@ -99,10 +99,18 @@ Features:
         -   post_sign-up
         -   post_login
         -   get_logout
+-   Error handling custom middleware (/middlewares/error_handler/errorHandler.js)
+-   Auth helper utility functions (/utils/helpers/auth_helpers.js)
 
 #### updates
 
--   Error handling custom middleware (/middlewares/error_handler/errorHandler.js)
--   Auth helper utility functions (/utils/helpers/auth_helpers.js)
+-   Auth Middleware: require access middleware that adds the user id to request or throws if the token doesn't exist or invalid (/middlewares/auth/requireAccess.js)
+-   User Model:
+    -   Add username field
+    -   remove the login and password hash and move them to it's own auth module
+-   User Controllers:
+    -   refactored login_post => user_login, signup_post => user_create
+    -   removed the logout route
+-   removed modules: /utils/auth.mjs, /middlewares/authMiddleware.mjs
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

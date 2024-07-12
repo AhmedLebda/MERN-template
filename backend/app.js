@@ -3,13 +3,11 @@ import express from "express";
 import index_Route from "./routes/index.mjs";
 import user_Routes from "./routes/user.mjs";
 // middlewares
-import { checkUser, requireAuth } from "./middlewares/auth/authMiddleware.mjs";
+import "express-async-errors";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import morgan from "morgan";
-import "express-async-errors";
 import errorhandler from "./middlewares/error_handler/errorHandler";
-
 // db
 import dbConnection from "./dbConnection";
 
@@ -26,9 +24,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 app.use(morgan("tiny"));
-
-// Checks if there is a user logged in by validating the jwt token in cookies
-app.use(checkUser);
 
 // Routes
 app.use("/api", index_Route);
