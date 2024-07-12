@@ -69,14 +69,35 @@ Features:
 
 ### Backend
 
-Dependencies: - express - mongoose - express-validator - jsonwebtoken - bcrypt - cookie-parser
+#### Dependencies:
 
-Features: - basic express server config (RESTful API) - index and user routes for login, sign-up and logout - utils: create and verify jwt - models: user model with first name, last name, email, password, confirm password, status fields - middlewares:
-= validation for login and sign-up forms
-= check user to verify jwt token in cookies
-= require auth to verify jwt token to protect routes - controllers: user controllers for:
-= _post_ sign-up  
-= _post_ login
-= _get_ logout
+-   express
+-   express-validator
+-   express-async-errors
+-   mongoose
+-   jsonwebtoken
+-   bcrypt
+-   cookie-parser
+-   cors-env
+-   cors
+-   morgan
+
+#### Dev Dependencies:
+
+-   supertest
+
+### Features:
+
+-   basic express server config (RESTful API)
+-   index and user routes for login, sign-up and logout
+-   utils: create and verify jwt
+-   models: user model with first name, last name, email, password, confirm password, status fields
+-   middlewares:
+    -   validation for login and sign-up forms
+    -   check user to verify jwt token in cookies
+    -   require auth to verify jwt token to protect routes - controllers: user controllers for:
+        -   post_sign-up
+        -   post_login
+        -   get_logout
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
