@@ -3,6 +3,7 @@
   "version": "1.1.0",
   "description": "This is a starter template for node/express REST API backend with basic configuration and packages",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./index.js",
     "dev": "cross-env NODE_ENV=development node --env-file=.env --watch ./index.js",
@@ -24,7 +25,7 @@
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "express": "^4.19.2",
-    "express-async-errors": "^3.1.1",
+    "express-async-handler": "^1.2.0",
     "express-validator": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.1",

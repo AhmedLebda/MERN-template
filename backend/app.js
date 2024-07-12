@@ -1,15 +1,14 @@
 import express from "express";
 // routes
-import index_Route from "./routes/index.mjs";
-import user_Routes from "./routes/user.mjs";
+import index_Route from "./routes/index.js";
+import user_Routes from "./routes/user.js";
 // middlewares
-import "express-async-errors";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import morgan from "morgan";
-import errorhandler from "./middlewares/error_handler/errorHandler";
+import errorHandler from "./middlewares/error_handler/errorHandler.js";
 // db
-import dbConnection from "./dbConnection";
+import dbConnection from "./dbConnection.js";
 
 // Init express app
 const app = express();
@@ -35,6 +34,6 @@ app.use((req, res) => {
 });
 
 // Error handler middleware
-app.use(errorhandler);
+app.use(errorHandler);
 
 export default app;

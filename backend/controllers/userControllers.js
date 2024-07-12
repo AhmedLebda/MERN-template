@@ -1,11 +1,12 @@
 // Validation
 import { validationResult } from "express-validator";
-import validateSignup from "../middlewares/validation/signup_form.mjs";
-import validateLogin from "../middlewares/validation/login_form.mjs";
+import validateSignup from "../middlewares/validation/signup_form.js";
+import validateLogin from "../middlewares/validation/login_form.js";
 // Models
-import userModel from "../models/user_model.mjs";
+import userModel from "../models/user_model.js";
 // Utils
-import AuthHelpers from "../utils/helpers/auth_helpers";
+import AuthHelpers from "../utils/helpers/auth_helpers.js";
+import asyncHandler from "express-async-handler";
 
 // Log-in Controller
 // ==> Validate the request username and password
@@ -16,12 +17,16 @@ import AuthHelpers from "../utils/helpers/auth_helpers";
 const user_login = [
     validateLogin,
 
-    async (req, res) => {
+    asyncHandler(async (req, res) => {
         const errors = validationResult(req);
 
         // Throw error if there are errors returned from validateLogin middleware
         if (!errors.isEmpty()) {
-            throw Error(errors.array());
+            const errorObj = errors.array().reduce((acc, curr) => {
+                acc[curr.path] = curr.msg;
+                return acc;
+            }, {});
+            throw Error(JSON.stringify(errorObj));
         }
 
         const { username, password } = req.body;
@@ -40,7 +45,7 @@ const user_login = [
             name: user.fullName,
             id: user.id,
         });
-    },
+    }),
 ];
 
 // Sign-up Controller
@@ -53,12 +58,16 @@ const user_login = [
 const user_create = [
     validateSignup,
 
-    async (req, res) => {
+    asyncHandler(async (req, res) => {
         const errors = validationResult(req);
 
         // Throw error if there are errors returned from validateSignup middleware
         if (!errors.isEmpty()) {
-            throw Error(errors.array());
+            const errorObj = errors.array().reduce((acc, curr) => {
+                acc[curr.path] = curr.msg;
+                return acc;
+            }, {});
+            throw Error(JSON.stringify(errorObj));
         }
 
         const { firstName, lastName, email, username, password } = req.body;
@@ -90,7 +99,7 @@ const user_create = [
             name: savedUser.fullName,
             id: savedUser.id,
         });
-    },
+    }),
 ];
 
 const userController = { user_login, user_create };

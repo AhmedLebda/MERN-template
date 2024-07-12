@@ -73,7 +73,7 @@ Features:
 
 -   express
 -   express-validator
--   express-async-errors
+-   ~~express-async-errors~~ => express-async-handler
 -   mongoose
 -   jsonwebtoken
 -   bcrypt
@@ -99,10 +99,13 @@ Features:
         -   post_sign-up
         -   post_login
         -   get_logout
+
+###
+
 -   Error handling custom middleware (/middlewares/error_handler/errorHandler.js)
 -   Auth helper utility functions (/utils/helpers/auth_helpers.js)
 
-#### updates
+###
 
 -   Auth Middleware: require access middleware that adds the user id to request or throws if the token doesn't exist or invalid (/middlewares/auth/requireAccess.js)
 -   User Model:
@@ -112,5 +115,12 @@ Features:
     -   refactored login_post => user_login, signup_post => user_create
     -   removed the logout route
 -   removed modules: /utils/auth.mjs, /middlewares/authMiddleware.mjs
+
+#### updates
+
+-   changed all extensions from .mjs to .js
+-   add "express-async-handler" instead of "express-async-errors"
+-   fixed user login and sign-up error handlers
+-   Add test rest requests for user login and sign-up
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

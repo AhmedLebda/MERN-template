@@ -6,8 +6,10 @@ export default [
         .toLowerCase()
         .notEmpty()
         .withMessage("This field can't be empty")
+        .bail()
         .isAlpha()
         .withMessage("First name can't be a number")
+        .bail()
         .isLength({ min: 3, max: 20 })
         .withMessage(
             "First name can't be lower than 3 chars or longer than 20 chars"
@@ -19,8 +21,10 @@ export default [
         .toLowerCase()
         .notEmpty()
         .withMessage("This field can't be empty")
+        .bail()
         .isAlpha()
         .withMessage("Last name can't be a number")
+        .bail()
         .isLength({ min: 3, max: 20 })
         .withMessage(
             "Last name can't be lower than 3 chars or longer than 20 chars"
@@ -31,8 +35,10 @@ export default [
         .trim()
         .notEmpty()
         .withMessage("This field can't be empty")
+        .bail()
         .isEmail()
         .withMessage("Please enter a valid email")
+        .bail()
         .isLength({ min: 3, max: 40 })
         .withMessage("Email is too long")
         .escape(),
@@ -42,6 +48,7 @@ export default [
         .toLowerCase()
         .notEmpty()
         .withMessage("This field can't be empty")
+        .bail()
         .isLength({ min: 3, max: 30 })
         .withMessage(
             "username can't be lower than 3 chars or longer than 30 chars"
@@ -52,6 +59,7 @@ export default [
         .trim()
         .notEmpty()
         .withMessage("This field can't be empty")
+        .bail()
         .isLength({ min: 6 })
         .withMessage("Password must be longer than 6 characters")
         .escape(),
