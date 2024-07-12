@@ -92,9 +92,9 @@ const user_create = [
             id: savedUser._id,
         });
 
-        res.json({
+        res.status(201).json({
             access_token: token,
-            username: savedUser.savedUsername,
+            username: savedUser.username,
             email: savedUser.email,
             name: savedUser.fullName,
             id: savedUser.id,

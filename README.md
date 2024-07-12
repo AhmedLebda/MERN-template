@@ -116,11 +116,15 @@ Features:
     -   removed the logout route
 -   removed modules: /utils/auth.mjs, /middlewares/authMiddleware.mjs
 
-#### updates
+###
 
 -   changed all extensions from .mjs to .js
 -   add "express-async-handler" instead of "express-async-errors"
 -   fixed user login and sign-up error handlers
 -   Add test rest requests for user login and sign-up
+
+#### updates
+
+-   Implemented API tests with Supertest for the users endpoint
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
