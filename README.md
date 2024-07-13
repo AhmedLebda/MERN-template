@@ -26,7 +26,15 @@
 
 ## About The Project
 
-A template for MERN stack projects with basic email and password auth
+A template for MERN stack projects:
+
+-   Front-end (vite React + JavaScript)
+
+    -   basic routing with react-router-dom
+
+-   Back-end ( NodeJs 'ExpressJS' + MongoDB 'Mongoose')
+
+    -   The app comes with many built-in features, such as authentication using JWT, request validation, error handling, logging, API documentation, test suites:
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -34,38 +42,41 @@ A template for MERN stack projects with basic email and password auth
 
 ## Getting Started
 
-Clone Repo
+-   Clone Repo
+
+### Backend
+
+-   cd backend
+-   npm install
+-   configure the files bellow:
+    -   .env
+-   npm run dev => to start the development server
+
+### Front-end
+
+-   cd frontend
+-   npm install
 
 ### Prerequisites
 
-node
-
-### Installation
-
-1- install all deps in frontend and backend
-2- backend:
-a- create a mongodb db and add the uri to the .env file
-b- uncomment the db connection code in app.js
+node, npm
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Info
 
-Information about this template
-
 ### Frontend
 
-Dependencies:
+### Dependencies:
 
 -   react
 -   react router
 -   tailwindCss
 
-Features:
+#### Features:
 
 -   pages: layout, error 404, home and about
 -   react router configuration with home and about routes
--   eslint: prop types disabled
 
 ### Backend
 
@@ -88,43 +99,13 @@ Features:
 
 ### Features:
 
--   basic express server config (RESTful API)
--   index and user routes for login, sign-up and logout
--   utils: create and verify jwt
--   models: user model with first name, last name, email, password, confirm password, status fields
--   middlewares:
-    -   validation for login and sign-up forms
-    -   check user to verify jwt token in cookies
-    -   require auth to verify jwt token to protect routes - controllers: user controllers for:
-        -   post_sign-up
-        -   post_login
-        -   get_logout
-
-###
-
--   Error handling custom middleware (/middlewares/error_handler/errorHandler.js)
--   Auth helper utility functions (/utils/helpers/auth_helpers.js)
-
-###
-
--   Auth Middleware: require access middleware that adds the user id to request or throws if the token doesn't exist or invalid (/middlewares/auth/requireAccess.js)
--   User Model:
-    -   Add username field
-    -   remove the login and password hash and move them to it's own auth module
--   User Controllers:
-    -   refactored login_post => user_login, signup_post => user_create
-    -   removed the logout route
--   removed modules: /utils/auth.mjs, /middlewares/authMiddleware.mjs
-
-###
-
--   changed all extensions from .mjs to .js
--   add "express-async-handler" instead of "express-async-errors"
--   fixed user login and sign-up error handlers
--   Add test rest requests for user login and sign-up
-
-#### updates
-
--   Implemented API tests with Supertest for the users endpoint
+-   Models: basic user model with validations
+-   NoSQL database: MongoDB object data modeling using Mongoose
+-   Authentication and authorization: using JWT (access token)
+-   Validation: request data validation using express-validator
+-   Logging: using morgan
+-   Error handling: error handling mechanism with specific result messages and codes
+-   CORS: Cross-Origin Resource-Sharing enabled using cors
+-   Tests: test suits for user endpoint for sign-in and sign-up
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
