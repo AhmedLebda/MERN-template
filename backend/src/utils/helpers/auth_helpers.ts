@@ -1,0 +1,102 @@
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import config from "../config";
+import User from "../../models/user";
+import { Request } from "express";
+import { Types } from "mongoose";
+import {
+	AssociatedDataError,
+	JwtError,
+	MissingConfigError,
+	UserNotFoundError,
+} from "../custom-errors";
+import { UserWithId } from "../../types/types";
+
+interface Payload {
+	id: Types.ObjectId;
+}
+
+const generateHashedPassword = async (password: string): Promise<string> => {
+	const salt = await bcrypt.genSalt();
+	return await bcrypt.hash(password, salt);
+};
+
+const createAccessToken = (payload: Payload): string => {
+	if (!config.ACCESS_TOKEN_SECRET)
+		throw new MissingConfigError("ACCESS_TOKEN_SECRET");
+
+	return jwt.sign(payload, config.ACCESS_TOKEN_SECRET, {
+		expiresIn: config.ACCESS_TOKEN_EXPIRY,
+	});
+};
+
+const createRefreshToken = (payload: Payload): string => {
+	if (!config.REFRESH_TOKEN_SECRET)
+		throw new MissingConfigError("REFRESH_TOKEN_SECRET");
+
+	return jwt.sign(payload, config.REFRESH_TOKEN_SECRET, {
+		expiresIn: config.REFRESH_TOKEN_EXPIRY,
+	});
+};
+
+const verifyAccessToken = (token: string) => {
+	if (!config.ACCESS_TOKEN_SECRET)
+		throw new MissingConfigError("ACCESS_TOKEN_SECRET");
+	return jwt.verify(token, config.ACCESS_TOKEN_SECRET);
+};
+
+const verifyRefreshToken = (token: string) => {
+	if (!config.REFRESH_TOKEN_SECRET)
+		throw new MissingConfigError("REFRESH_TOKEN_SECRET");
+	return jwt.verify(token, config.REFRESH_TOKEN_SECRET);
+};
+
+const validateCredentials = (username: unknown, password: unknown) => {
+	if (
+		!username ||
+		!password ||
+		typeof username !== "string" ||
+		typeof password !== "string"
+	)
+		throw new AssociatedDataError("invalid username or password");
+};
+
+// Log user with username and password and if credentials are valid it returns the user from db
+const login = async (
+	username: string,
+	password: string
+): Promise<UserWithId> => {
+	const user = await User.findOne({ username });
+
+	if (!user) throw new UserNotFoundError("invalid username or password");
+
+	const validPassword = await bcrypt.compare(password, user.password);
+
+	if (!validPassword)
+		throw new UserNotFoundError("invalid username or password");
+
+	return user;
+};
+
+// Only returns the token without the 'Bearer' word if there is a token otherwise it returns null
+const getBearerToken = (req: Request) => {
+	const authorization = req.get("authorization");
+
+	if (!authorization || !authorization.startsWith("Bearer ")) {
+		throw new JwtError("No token provided");
+	}
+	return authorization.replace("Bearer ", "");
+};
+
+const AuthHelpers = {
+	generateHashedPassword,
+	createAccessToken,
+	verifyAccessToken,
+	login,
+	getBearerToken,
+	createRefreshToken,
+	verifyRefreshToken,
+	validateCredentials,
+};
+
+export default AuthHelpers;

@@ -5,7 +5,13 @@ interface CustomError extends Error {
 	statusCode: number;
 }
 
-const customErrors = ["JwtError", "InactiveAccountError"];
+const customErrors = [
+	"JwtError",
+	"InactiveAccountError",
+	"AssociatedDataError",
+	"MissingConfigError",
+	"UserNotFoundError"
+];
 
 const errorhandler = (
 	error: CustomError,
