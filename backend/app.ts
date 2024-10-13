@@ -26,10 +26,10 @@ app.use(morgan("tiny"));
 
 // Routes
 app.use("/api", IndexRouter);
-app.use("/api/users", AuthRouter);
+app.use("/api/auth", AuthRouter);
 
 // Unknown endpoint
-app.use((req, res) => {
+app.use((_req, res) => {
 	res.status(404).json({ error: "unknown endpoint" });
 });
 
