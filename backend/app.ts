@@ -1,20 +1,17 @@
 import express from "express";
 // routes
-import index_Route from "./routes/index.js";
-import user_Routes from "./routes/user.js";
+import IndexRouter from "./src/routes/index";
+import AuthRouter from "./src/routes/auth";
 // middlewares
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import errorHandler from "./src/middlewares/error_handler/errorHandler";
 import morgan from "morgan";
-import errorHandler from "./middlewares/error_handler/errorHandler.js";
-// db
-import dbConnection from "./dbConnection.js";
+import successLogger from "./src/middlewares/logger/success_logger";
+import errorLogger from "./src/middlewares/logger/error_logger";
 
 // Init express app
 const app = express();
-
-// db connection
-dbConnection();
 
 // middlewares
 app.use(express.static("public"));
@@ -22,15 +19,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
+app.use(successLogger);
+app.use(errorLogger);
 app.use(morgan("tiny"));
 
 // Routes
-app.use("/api", index_Route);
-app.use("/api/users", user_Routes);
+app.use("/api", IndexRouter);
+app.use("/api/users", AuthRouter);
 
 // Unknown endpoint
 app.use((req, res) => {
-    res.status(404).json({ error: "unknown endpoint" });
+	res.status(404).json({ error: "unknown endpoint" });
 });
 
 // Error handler middleware
