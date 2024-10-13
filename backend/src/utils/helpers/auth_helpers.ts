@@ -10,7 +10,7 @@ import {
 	MissingConfigError,
 	UserNotFoundError,
 } from "../custom-errors";
-import { UserWithId } from "../../types/types";
+import { CreateUserRequest, UserWithId } from "../../types/types";
 
 interface Payload {
 	id: Types.ObjectId;
@@ -51,16 +51,6 @@ const verifyRefreshToken = (token: string) => {
 	return jwt.verify(token, config.REFRESH_TOKEN_SECRET);
 };
 
-const validateCredentials = (username: unknown, password: unknown) => {
-	if (
-		!username ||
-		!password ||
-		typeof username !== "string" ||
-		typeof password !== "string"
-	)
-		throw new AssociatedDataError("invalid username or password");
-};
-
 // Log user with username and password and if credentials are valid it returns the user from db
 const login = async (
 	username: string,
@@ -86,6 +76,25 @@ const getBearerToken = (req: Request) => {
 		throw new JwtError("No token provided");
 	}
 	return authorization.replace("Bearer ", "");
+};
+
+const validateCredentials = (body: unknown): CreateUserRequest => {
+	if (!body || typeof body !== "object")
+		throw new AssociatedDataError("invalid username or password");
+
+	const { username, password } = body as CreateUserRequest;
+
+	if (typeof username !== "string" || username.trim() === "") {
+		throw new AssociatedDataError("invalid username or password");
+	}
+	if (typeof password !== "string" || password.length < 6) {
+		throw new AssociatedDataError("invalid username or password");
+	}
+
+	return {
+		username,
+		password,
+	};
 };
 
 const AuthHelpers = {

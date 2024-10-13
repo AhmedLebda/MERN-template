@@ -1,4 +1,5 @@
 import express from "express";
+import corsOptions from "./src/utils/corsOptions";
 // routes
 import IndexRouter from "./src/routes/index";
 import AuthRouter from "./src/routes/auth";
@@ -18,7 +19,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(successLogger);
 app.use(errorLogger);
 app.use(morgan("tiny"));

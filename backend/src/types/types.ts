@@ -9,3 +9,8 @@ export interface UserWithId extends Document {
 	role: Role;
 	active: boolean;
 }
+
+export interface CreateUserRequest {
+	username: string;
+	password: string;
+}

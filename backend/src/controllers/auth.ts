@@ -14,9 +14,7 @@ const refCookieOptions = {
 // @Route: POST /api/auth
 // @Access: Public
 export const login = asyncHandler(async (req, res) => {
-	const { username, password } = req.body;
-
-	AuthHelpers.validateCredentials(username, password);
+	const { username, password } = AuthHelpers.validateCredentials(req.body);
 
 	const user = await AuthHelpers.login(username, password);
 
@@ -83,4 +81,26 @@ export const refresh = asyncHandler(async (req, res) => {
 export const logout = asyncHandler(async (_req, res) => {
 	res.clearCookie("ref_jwt");
 	res.status(200).json({ message: "Cookies cleared!" });
+});
+
+// @Desc: signup
+// @Route: POST /api/auth/signup
+// @Access: Public
+export const signup = asyncHandler(async (req, res) => {
+	const { username, password } = AuthHelpers.validateCredentials(req.body);
+
+	const hashedPassword = await AuthHelpers.generateHashedPassword(password);
+
+	const userObj = { username, password: hashedPassword };
+
+	const user = new User(userObj);
+
+	const createdUser = await user.save();
+
+	// Send response with user data
+	res.status(201).json({
+		id: createdUser.id,
+		username: createdUser.username,
+		active: createdUser.active,
+	});
 });
