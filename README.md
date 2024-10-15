@@ -3,20 +3,20 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
+      <a href=#about-the-project>About The Project</a>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href=#getting-started>Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href=#prerequisites>Prerequisites</a></li>
+        <li><a href=#installation>Installation</a></li>
       </ul>
     </li>
      <li>
-      <a href="#info">Info</a>
+      <a href=#info>Info</a>
       <ul>
-        <li><a href="#frontend">frontend</a></li>
-        <li><a href="#backend">backend</a></li>
+        <li><a href=#frontend>frontend</a></li>
+        <li><a href=#backend>backend</a></li>
       </ul>
     </li>
   </ol>
@@ -32,11 +32,11 @@ A template for MERN stack projects:
 
     -   basic routing with react-router-dom
 
--   Back-end ( NodeJs 'ExpressJS' + MongoDB 'Mongoose')
+-   Back-end ( NodeJs 'ExpressJS' + MongoDB 'Mongoose') (Typescript)
 
-    -   The app comes with many built-in features, such as authentication using JWT, request validation, error handling, logging, API documentation, test suites:
+    -   The app comes with many built-in features, such as authentication using JWT, request validation, error handling, logging, login rate limiting, basic CORS settings
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align=right>(<a href=#readme-top>back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 
@@ -61,7 +61,7 @@ A template for MERN stack projects:
 
 node, npm
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align=right>(<a href=#readme-top>back to top</a>)</p>
 
 ## Info
 
@@ -92,10 +92,14 @@ node, npm
 -   cors-env
 -   cors
 -   morgan
+-   dotenv
+-   express-rate-limit
 
 #### Dev Dependencies:
 
--   supertest
+-   eslint
+-       ts-node-dev
+-       typescript
 
 ### Features:
 
@@ -106,6 +110,5 @@ node, npm
 -   Logging: using morgan
 -   Error handling: error handling mechanism with specific result messages and codes
 -   CORS: Cross-Origin Resource-Sharing enabled using cors
--   Tests: test suits for user endpoint for sign-in and sign-up
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align=right>(<a href=#readme-top>back to top</a>)</p>
